@@ -3,6 +3,7 @@ package com.unicesumar.entities;
 import com.unicesumar.paymentMethods.PaymentMethod;
 import com.unicesumar.paymentMethods.PaymentType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,37 +11,29 @@ public class Sale extends Entity{
     private User user;
     private List<Product> products;
     private PaymentType paymentType;
-    private double totalAmount;
+    private LocalDateTime paymentDate;
 
-    public Sale(UUID uuid, PaymentType paymentType, List<Product> products, double totalAmount, User user) {
+    public Sale(UUID uuid, User user, List<Product> products, PaymentType paymentType, LocalDateTime paymentDate) {
         super(uuid);
-        this.paymentType = paymentType;
-        this.products = products;
-        this.totalAmount = totalAmount;
         this.user = user;
-    }
-
-    public Sale(PaymentType paymentType, List<Product> products, double totalAmount, User user) {
-        this.paymentType = paymentType;
         this.products = products;
-        this.totalAmount = totalAmount;
-        this.user = user;
-    }
-
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
+        this.paymentDate = paymentDate;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public Sale(User user, List<Product> products, PaymentType paymentType, LocalDateTime paymentDate) {
+        this.user = user;
+        this.products = products;
+        this.paymentType = paymentType;
+        this.paymentDate = paymentDate;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Product> getProducts() {
@@ -51,11 +44,19 @@ public class Sale extends Entity{
         this.products = products;
     }
 
-    public User getUser() {
-        return user;
+    public PaymentType getPaymentType() {
+        return paymentType;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

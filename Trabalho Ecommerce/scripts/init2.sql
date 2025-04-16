@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS sales (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
     payment_method TEXT NOT NULL,
-    sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(uuid)
 );
 
