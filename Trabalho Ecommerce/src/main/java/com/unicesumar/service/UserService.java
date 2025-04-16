@@ -27,10 +27,10 @@ public class UserService {
 
     public void registerUsers(){
         System.out.println("Cadastrar Usuário");
-//        userRepository.save(new User("Felipe", UUID.randomUUID().toString().concat("felpinho@123.com"), "123"));
-//        userRepository.save(new User("Rafael",  UUID.randomUUID().toString().concat("lamoburguini@456.br"), "456"));
-//        userRepository.save(new User("Pedro", UUID.randomUUID().toString().concat("pedro@alvaro.org.br.com.batman"), "789"));
-        userRepository.save(new User("Peng", "peng114@gmail.com", "12345678"));
+        userRepository.save(new User("Felipe", UUID.randomUUID().toString().concat("felpinho@123.com"), "123"));
+        userRepository.save(new User("Rafael",  UUID.randomUUID().toString().concat("lamoburguini@456.br"), "456"));
+        userRepository.save(new User("Pedro", UUID.randomUUID().toString().concat("pedro@alvaro.org.br.com.batman"), "789"));
+        //userRepository.save(new User("Peng", "peng114@gmail.com", "12345678"));
     }
 
     public void searchUserByEmail(){
