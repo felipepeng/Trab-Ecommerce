@@ -1,39 +1,34 @@
 package com.unicesumar.repository;
 
+import com.unicesumar.entities.Product;
 import com.unicesumar.entities.Sale;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SaleRepository implements EntityRepository<Sale> {
+public class Sale_ProductsRepository implements EntityRepository<Sale> {
 
     private final Connection connection;
-    private final Sale_ProductsRepository Sale_productRepo;
-
-    public SaleRepository(Connection connection){
-        this.connection = connection;
-        this.Sale_productRepo = new Sale_ProductsRepository(connection);
-    }
+    public Sale_ProductsRepository(Connection connection){this.connection = connection;}
 
     @Override
     public void save(Sale entity) {
-        String query = "INSERT INTO sales VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO sale_products VALUES (?, ?)";
+
         try {
             PreparedStatement stmt = this.connection.prepareStatement(query);
-            stmt.setObject(1, entity.getUuid().toString());
-            stmt.setObject(2, entity.getUser().getUuid().toString());
-            stmt.setString(3, entity.getPaymentType().toString());
-            stmt.setTimestamp(4, Timestamp.valueOf(entity.getPaymentDate()));
-            stmt.executeUpdate();
+            for (Product product : entity.getProducts()) {
+            stmt.setObject(1, entity.getUuid());
+            stmt.setObject(2, product.getUuid());
+            }
+            stmt.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        Sale_productRepo.save(entity);
     }
 
     @Override
