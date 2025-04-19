@@ -1,17 +1,22 @@
 package com.unicesumar;
 
+import com.unicesumar.entities.Product;
+import com.unicesumar.entities.User;
 import com.unicesumar.repository.ProductRepository;
+import com.unicesumar.repository.SaleRepository;
 import com.unicesumar.repository.UserRepository;
 import com.unicesumar.service.ProductService;
 import com.unicesumar.service.SaleService;
 import com.unicesumar.service.UserService;
 import com.unicesumar.view.IndexView;
 import com.unicesumar.view.ProductView;
+import com.unicesumar.view.SaleView;
 import com.unicesumar.view.UserView;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +24,7 @@ public class Main {
         //Repositorys
         ProductRepository productRepository = null;
         UserRepository userRepository = null;
+        SaleRepository saleRepository = null;
         Connection conn = null;
 
 
@@ -31,6 +37,7 @@ public class Main {
             if (conn != null) {
                 productRepository = new ProductRepository(conn);
                 userRepository = new UserRepository(conn);
+                saleRepository = new SaleRepository(conn);
             } else {
                 System.out.println("Falha na conexão.");
                 System.exit(1);
@@ -44,9 +51,11 @@ public class Main {
         IndexView indexView = new IndexView();
         ProductView productView = new ProductView();
         UserView userView = new UserView();
+        SaleView saleView = new SaleView();
         //Services
         UserService userService = new UserService(userRepository, userView);
         ProductService productService = new ProductService(productRepository, productView);
+        SaleService saleService = new SaleService(saleRepository, saleView);
 
         //Scanner
         Scanner scanner = new Scanner(System.in);
@@ -78,16 +87,17 @@ public class Main {
                     userService.searchUserByEmail();
                     break;
                 case 7: //Realizar Compra
-
+                    User client = userService.searchUserByEmail();
+                    List<Product> products = productService.searchProductById();
+                    saleService.realizarSale(client, products);
                     break;
                 case 8:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente");
-                    ;
             }
-        } while (option != 7);
+        } while (option != 8);
 
         scanner.close(); //Fecha o Scanner
         try {

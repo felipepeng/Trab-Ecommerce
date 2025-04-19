@@ -13,7 +13,6 @@ public class UserService {
 
     UserRepository userRepository;
     UserView userView;
-    List<User> users;
 
     public UserService(UserRepository userRepository, UserView userView) {
         this.userRepository = userRepository;
@@ -34,7 +33,7 @@ public class UserService {
         //userRepository.save(new User("Peng", "peng114@gmail.com", "12345678"));
     }
 
-    public void searchUserByEmail(){
+    public User searchUserByEmail(){
         System.out.print("Email: ");
         Scanner sc = new Scanner(System.in);
         String email = sc.nextLine();
@@ -46,9 +45,12 @@ public class UserService {
             System.out.println("UUID: " + u.getUuid());
             System.out.println("Nome: " + u.getName());
             System.out.println("Email: " + u.getEmail());
-        } else {
-            System.out.println("Usuário não encontrado.");
+            return u;
         }
+
+        System.out.println("Usuário não encontrado.");
+        return null;
+
     }
 
 }

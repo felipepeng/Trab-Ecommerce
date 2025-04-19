@@ -14,7 +14,8 @@ public class IndexView {
         System.out.println("4 - Cadastrar Usuário");
         System.out.println("5 - Listar Usuários");
         System.out.println("6 - Procurar Usuário por Email");
-        System.out.println("7 - Sair");
+        System.out.println("7 - Realizar Venda");
+        System.out.println("8 - Sair");
         System.out.println("Escolha uma opção: ");
     }
 

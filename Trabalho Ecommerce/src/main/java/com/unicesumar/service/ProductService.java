@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class ProductService {
-    List<Product> products;
     ProductView productView;
     ProductRepository productRepository;
 
@@ -35,29 +34,26 @@ public class ProductService {
         productRepository.save(new Product("Computador", 3000));
     }
 
-    public void searchProductById(){
+    public List<Product> searchProductById(){
         Scanner sc = new Scanner(System.in);
         List<UUID> ids = new ArrayList<>();
 
-        System.out.println("Digite os IDs dos produtos (digite 'fim' para terminar):");
+        System.out.println("Digite os IDs dos produtos (Separados por \",\"):");
 
-        //Laço de repetição para coletar os Ids
-        while (true) {
-            System.out.print("ID: ");
-            String input = sc.nextLine().trim();
+        System.out.print("ID: ");
+        String input = sc.nextLine().trim();
 
-            //Condição de saída do laço
-            if (input.equalsIgnoreCase("fim")) {
-                break;
+
+
+        try {
+            for (String idString : input.split(",")) {
+                UUID id = UUID.fromString(idString.trim());
+                ids.add(id);
             }
-
-            try {
-                UUID id = UUID.fromString(input);
-                ids.add(id); //Adiciona o ID a lista
-            } catch (IllegalArgumentException e) {
-                System.out.println("ID inválido! Tente novamente.");
-            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("ID inválido! Tente novamente.");
         }
+
 
 
 
@@ -68,5 +64,9 @@ public class ProductService {
 
         //Printa na tela os produtos correspondentes da lista
         products.forEach(productView::showProduct);
+
+        System.out.println("|------------------------------------|");
+        return products;
+
     }
 }
