@@ -34,22 +34,30 @@ public class UserService {
     }
 
     public User searchUserByEmail(){
-        System.out.print("Email: ");
         Scanner sc = new Scanner(System.in);
-        String email = sc.nextLine();
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> userOptional = Optional.empty();
 
-        if (user.isPresent()) {
-            User u = user.get();
-            System.out.println("Usuário encontrado:");
-            System.out.println("UUID: " + u.getUuid());
-            System.out.println("Nome: " + u.getName());
-            System.out.println("Email: " + u.getEmail());
-            return u;
+        while (userOptional.isEmpty()) {
+            System.out.print("Email: ");
+            String email = sc.nextLine().trim();
+
+            userOptional = userRepository.findByEmail(email);
+
+            if (userOptional.isEmpty()) {
+                System.out.println("Usuário não encontrado. Tente novamente.");
+            }
         }
 
-        System.out.println("Usuário não encontrado.");
-        return null;
+        User user = userOptional.get();
+
+        System.out.println("\nUsuário encontrado:");
+        System.out.println("|------------------------------------|");
+        System.out.println("UUID: " + user.getUuid());
+        System.out.println("Nome: " + user.getName());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("|------------------------------------|");
+
+        return user;
 
     }
 

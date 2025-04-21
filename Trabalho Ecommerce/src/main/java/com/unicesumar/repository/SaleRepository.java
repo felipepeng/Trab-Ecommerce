@@ -30,11 +30,9 @@ public class SaleRepository implements EntityRepository<Sale> {
             stmt.setString(3, entity.getPaymentType().toString());
             stmt.setTimestamp(4, Timestamp.valueOf(entity.getPaymentDate()));
             stmt.executeUpdate();
-            System.out.println("Teste1");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Teste2");
         Sale_productRepo.save(entity);
     }
 

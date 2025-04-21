@@ -20,6 +20,7 @@ public class ProductService {
 
     public void listProducts(){
         System.out.println("Listar Produtos");
+        System.out.println("|------------------------------------|");
         List<Product> products = productRepository.findAll();
         products.forEach(productView::showProduct);
 //        products.forEach(System.out::println); //Antigo
@@ -36,37 +37,48 @@ public class ProductService {
 
     public List<Product> searchProductById(){
         Scanner sc = new Scanner(System.in);
-        List<UUID> ids = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
-        System.out.println("Digite os IDs dos produtos (Separados por \",\"):");
+        System.out.println();
 
-        System.out.print("ID: ");
-        String input = sc.nextLine().trim();
+        while(products.isEmpty()){
+            List<UUID> ids = new ArrayList<>();
+            System.out.println("Digite os IDs dos produtos (separados por \",\"):");
 
+            System.out.print("ID: ");
+            String input = sc.nextLine().trim();
 
+            boolean inputValido = true;
 
-        try {
             for (String idString : input.split(",")) {
-                UUID id = UUID.fromString(idString.trim());
-                ids.add(id);
+                try {
+                    UUID id = UUID.fromString(idString.trim());
+                    ids.add(id);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("ID inválido encontrado: " + idString.trim());
+                    inputValido = false;
+                    break;
+                }
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("ID inválido! Tente novamente.");
+
+            if (!inputValido) {
+                System.out.println("Tente novamente. Apenas IDs no formato UUID são permitidos.");
+                continue;
+            }
+
+            products = productRepository.findByIds(ids);
+
+            if (products.size() < ids.size()) {
+                System.out.println("Um ou mais produtos não foram encontrados no banco.");
+                System.out.println("Tente novamente inserindo apenas IDs válidos e existentes.");
+                products.clear(); // força repetir
+            }
         }
 
-
-
-
-        //Procura os Produtos com esses Ids no banco e adiciona a lista Products
-        List<Product> products = productRepository.findByIds(ids);
-
+        System.out.println("\nProdutos encontrados com sucesso!");
         System.out.println("|------------------------------------|");
-
-        //Printa na tela os produtos correspondentes da lista
         products.forEach(productView::showProduct);
 
-        System.out.println("|------------------------------------|");
         return products;
-
     }
 }

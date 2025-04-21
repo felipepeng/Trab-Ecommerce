@@ -10,7 +10,7 @@ public class IndexView {
         System.out.println("\n---MENU---");
         System.out.println("1 - Cadastrar Produto");
         System.out.println("2 - Listas Produtos");
-        System.out.println("3 - Buscar Produto Por Email");
+        System.out.println("3 - Buscar Produto Por ID");
         System.out.println("4 - Cadastrar Usuário");
         System.out.println("5 - Listar Usuários");
         System.out.println("6 - Procurar Usuário por Email");

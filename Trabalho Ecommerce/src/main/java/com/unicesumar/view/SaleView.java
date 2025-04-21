@@ -13,6 +13,8 @@ public class SaleView {
     public PaymentType getPayment() {
         PaymentType payment = null;
 
+        System.out.println();
+
         while (payment == null) {
             System.out.println("Escolha a forma de pagamento:");
             for (PaymentType type : PaymentType.values()) {
@@ -49,14 +51,16 @@ public class SaleView {
     }
 
     public void showSale(Sale sale, double totalPrice) {
-        System.out.println("Venda realizada com sucesso!");
+        System.out.println("\nVenda realizada com sucesso!");
+
+        System.out.println("\nResumo da venda:");
         System.out.println("Cliente: " + sale.getUser().getName());
         System.out.println("Produtos: ");
         for (Product product : sale.getProducts()) {
             System.out.println("- " + product.getName() + " (R$ " + product.getPrice() + ")");
         }
-        System.out.println("Total da venda: " + totalPrice);
-        System.out.println("Forma de pagamento: " + sale.getPaymentType().name());
+        System.out.println("Valor Total: " + totalPrice);
+        System.out.println("Pagamento: " + sale.getPaymentType().name());
         System.out.println("Data da venda: " + sale.getPaymentDate());
     }
 
