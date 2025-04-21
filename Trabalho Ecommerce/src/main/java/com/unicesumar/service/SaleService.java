@@ -37,10 +37,18 @@ public class SaleService {
 
         try {
             saleRepository.save(sale);
-            System.out.println("Venda realizada com sucesso!");
+            view.showSale(sale, totalPrice(products));
         } catch (Exception e) {
             System.out.println("Erro ao realizar a venda: " + e.getMessage());
         }
 
+    }
+
+    public double totalPrice(List<Product> products) {
+        double totalPrice = 0.0;
+        for (Product product : products) {
+            totalPrice += product.getPrice();
+        }
+        return totalPrice;
     }
 }

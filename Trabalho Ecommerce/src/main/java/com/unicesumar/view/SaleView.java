@@ -1,5 +1,7 @@
 package com.unicesumar.view;
 
+import com.unicesumar.entities.Product;
+import com.unicesumar.entities.Sale;
 import com.unicesumar.paymentMethods.PaymentType;
 
 import java.util.Scanner;
@@ -44,6 +46,18 @@ public class SaleView {
             default:
                 System.out.println("Erro desconhecido.");
         }
+    }
+
+    public void showSale(Sale sale, double totalPrice) {
+        System.out.println("Venda realizada com sucesso!");
+        System.out.println("Cliente: " + sale.getUser().getName());
+        System.out.println("Produtos: ");
+        for (Product product : sale.getProducts()) {
+            System.out.println("- " + product.getName() + " (R$ " + product.getPrice() + ")");
+        }
+        System.out.println("Total da venda: " + totalPrice);
+        System.out.println("Forma de pagamento: " + sale.getPaymentType().name());
+        System.out.println("Data da venda: " + sale.getPaymentDate());
     }
 
 }

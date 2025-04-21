@@ -20,11 +20,14 @@ public class Sale_ProductsRepository implements EntityRepository<Sale> {
         String query = "INSERT INTO sale_products VALUES (?, ?)";
 
         try {
+            System.out.println("Teste3");
             PreparedStatement stmt = this.connection.prepareStatement(query);
             for (Product product : entity.getProducts()) {
             stmt.setObject(1, entity.getUuid());
             stmt.setObject(2, product.getUuid());
+            stmt.addBatch();
             }
+            System.out.println("Teste4");
             stmt.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
